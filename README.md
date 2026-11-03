@@ -6,8 +6,12 @@ I picked the direction **"backend is deployed, frontend is not integrated yet"**
 The Owner endpoints for the group pre-order (view participants, confirm) exist only in the API,
 so the scenarios are tested on **API level**. Positive and negative cases are covered for levels 1 and 2.
 On the UI side there is **one minimal test** (sign in and land on the main page), just to prove that the UI layer of the framework works.
+It needs the `UI_URL` variable. In CI that secret is not set, so there the test is skipped. Locally it runs when `UI_URL` is filled in `.env`.
 
 Stack: Playwright Test + TypeScript. GitHub Actions for the pipeline.
+
+I used TypeScript instead of the C# framework from the course, because the task allows any approach that I can justify.
+Playwright Test has a built-in API client, parallel runs, reports and traces, so no extra layers were needed for API tests.
 
 ## What is covered
 
@@ -77,7 +81,6 @@ Secrets to add in the repository settings: `API_URL`, `UI_URL` and optionally `O
 
 - "Owner adds own dishes": the API gives the Owner only the id of the session (`GET /reservations/{id}/guest-session-id`), not a session token, so this cannot be done through the public API the same way as for guests.
 - Waiter scenarios (no waiter account was available for the test run).
-
 - Report Portal and a cloud pipeline outside GitHub Actions (optional task).
 - The real group pre-order UI, because the frontend is not integrated with these endpoints yet.
 
